@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item name="xkcd" type="comic">
+		<name>xkcd</name>
+		<url>http://xkcd.com</url>
+		<rss>http://xkcd.com/feed</rss>
+	</item>
+	<item name="smbc" type="comic">
+		<name>Saturday Morning Breakfast Cereal</name>
+		<url>http://www.smbc-comics.com/</url>
+		<rss>http://feeds.feedburner.com/smbc-comics/PvLb</rss>
+	</item>
+	<item name="qc" type="comic">
+		<name>Questionable Content</name>
+		<url>http://questionablecontent.net/</url>
+		<rss>http://www.questionablecontent.net/QCRSS.xml</rss>
+	</item>
+</resources>

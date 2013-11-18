@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Webcomic Relief</string>
+    <string name="action_add">Add Comic</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="button_homepage">Homepage</string>
+    <string name="button_first_unread">First New</string>
+    <string name="add_name_hint">Name</string>
+    <string name="add_rss_hint">RSS Feed</string>
+    <string name="button_add">Add</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="add_url_hint">URL</string>
+    <string name="add_dialog_message">Where would you like to add from?</string>
+    <string name="add_dialog_list">From List</string>
+    <string name="add_dialog_manual">Manually</string>
+
+</resources>
