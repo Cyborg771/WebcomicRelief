@@ -1,5 +1,6 @@
 package com.example.webcomicrelief;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Button;
@@ -10,11 +11,20 @@ import android.net.Uri;
 import android.view.*;
 
 public class ComicListElement extends LinearLayout {
-
-	public ComicListElement(Context context, String title, String homepage, String unread) {
+	
+	private Button unreadButton;
+	private int padding;
+	private Context context;
+	public ComicInfo info;
+	public String firstNewURL;
+	
+	public ComicListElement(Context context, String title, String homepage, String unread, ComicInfo info) {
 		super(context);
 		
-		int padding = (int)(10*getResources().getDisplayMetrics().density+0.5f);
+		this.context = context;
+		this.info = info;
+		
+		padding = (int)(10*getResources().getDisplayMetrics().density+0.5f);
 		
 		setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		setBackgroundResource(R.drawable.element_background);
@@ -62,33 +72,71 @@ public class ComicListElement extends LinearLayout {
 		}.init(context, homepage));
 		buttons.addView(homeButton);
 		
-		Button unreadButton = new Button(context, null, android.R.attr.buttonStyleSmall);
+		unreadButton = new Button(context, null, android.R.attr.buttonStyleSmall);
 		unreadButton.setText(R.string.button_first_unread);
-		if (unread == null) {
+		unreadButton.setEnabled(false);
+		buttons.addView(unreadButton);
+		
+		Button deleteButton = new Button(context, null, android.R.attr.buttonStyleSmall);
+		deleteButton.setText(R.string.button_delete);
+		deleteButton.setOnClickListener(new OnClickListener() {
+			private Context context;
+			private ComicInfo info;
+			
+			@Override
+			public void onClick(View v) {
+				((HomeScreenActivity)context).removeComic(info);
+			}
+			
+			private OnClickListener init(Context context, ComicInfo info) {
+				this.context = context;
+				this.info = info;
+				return this;
+			}
+		}.init(context, info));
+		buttons.addView(deleteButton);
+	}
+	
+	public void setUnread(String url) {
+		if (url == null) {
 			unreadButton.setEnabled(false);
-		}
-		else {
+			setBackgroundResource(R.drawable.element_background);
+			setPadding(padding, padding, padding, padding);
+		} else {
+			unreadButton.setEnabled(true);
 			setBackgroundResource(R.drawable.element_background_new);
 			setPadding(padding, padding, padding, padding);
 			unreadButton.setOnClickListener(new OnClickListener() {
 				private Context context;
 				private String unread;
+				private ComicInfo info;
+				private ComicListElement element;
 				
 				@Override
 				public void onClick(View v) {
+					info.setLastRead(info.getMostRecent());
+					info.setFirstNew(null);
+					element.setUnread(null);
+					((HomeScreenActivity)context).saveList();
 					Intent browserIntent = new Intent(Intent.ACTION_VIEW);
 					browserIntent.setData(Uri.parse(unread));
 					context.startActivity(browserIntent);
 				}
 				
-				private OnClickListener init(Context context, String unread) {
+				private OnClickListener init(Context context, String unread, ComicInfo info, ComicListElement element) {
 					this.context = context;
 					this.unread = unread;
+					this.info = info;
+					this.element = element;
 					return this;
 				}
-			}.init(context, unread));
+			}.init(context, url, info, this));
 		}
-		buttons.addView(unreadButton);
+	}
+	
+	public void setBroken() {
+		setBackgroundResource(R.drawable.element_background_broken);
+		setPadding(padding, padding, padding, padding);
 	}
 
 }

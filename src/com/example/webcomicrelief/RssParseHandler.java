@@ -6,10 +6,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 public class RssParseHandler extends DefaultHandler {
 	private ArrayList<RssItem> rssItems;
 	private RssItem currentItem;
 	private boolean parsingTitle;
+	private StringBuffer currentLinkSb;
 	private boolean parsingLink;
 	
 	public RssParseHandler() {
@@ -28,6 +31,7 @@ public class RssParseHandler extends DefaultHandler {
 			parsingTitle = true;
 		} else if ("link".equals(qName)) {
 			parsingLink = true;
+			currentLinkSb = new StringBuffer();
 		}
 	}
 	
@@ -39,15 +43,23 @@ public class RssParseHandler extends DefaultHandler {
 			parsingTitle = false;
 		} else if ("link".equals (qName)) {
 			parsingLink = false;
+			if (currentItem != null) {
+				currentItem.setLink(currentLinkSb.toString());
+			}
 		}
 	}
 	
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		if (parsingTitle) {
-			if (currentItem != null) currentItem.setTitle(new String(ch, start, length));
+			if (currentItem != null) {
+				currentItem.setTitle(new String(ch, start, length));
+			}
 		} else if (parsingLink) {
-			if (currentItem != null) currentItem.setLink(new String(ch, start, length));
-			parsingLink = false;
+			if (currentItem != null) {
+				//currentItem.setLink(new String(ch, start, length));
+				currentLinkSb.append(new String(ch, start, length));
+			}
+			//parsingLink = false;
 		}
 	}
 }

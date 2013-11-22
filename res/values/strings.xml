@@ -15,5 +15,7 @@
     <string name="add_dialog_message">Where would you like to add from?</string>
     <string name="add_dialog_list">From List</string>
     <string name="add_dialog_manual">Manually</string>
+    <string name="button_delete">Delete</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>

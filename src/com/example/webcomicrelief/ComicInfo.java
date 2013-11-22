@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ComicInfo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 	
 	private String name;
 	public void setName(String name) {this.name = name;}
@@ -25,6 +25,14 @@ public class ComicInfo implements Serializable {
 	private String lastRead;
 	public void setLastRead(String lastViewed) {this.lastRead = lastViewed;}
 	public String getLastRead() {return lastRead;}
+	
+	private String firstNew;
+	public void setFirstNew(String firstNew) {this.firstNew = firstNew;}
+	public String getFirstNew() {return firstNew;}
+	
+	private String mostRecent;
+	public void setMostRecent(String mostRecent) {this.mostRecent = mostRecent;}
+	public String getMostRecent() {return mostRecent;}
 	
 	public ComicInfo(String name, String url, String rss){
 		this.name = name;
